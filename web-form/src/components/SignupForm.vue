@@ -29,6 +29,14 @@
         <input type="checkbox" value="JAVA" v-model="teck_exp">
         <label> JAVA </label>
       </div>
+      <div>
+        <label>Other skills</label>
+        <input input="text" v-model="temp_skill" @keyup.alt="addSkill">
+      </div>
+
+      <div v-for="skill in skills" :key="skill" class="pill">
+      <p @click="deleteSkill(skill)">{{skill}}</p>
+      </div>
 
   </form>
   <p> Email is {{ email }}</p>
@@ -36,6 +44,7 @@
   <p> Role is {{ role }}</p>
   <p> Terms accepted is {{ terms }}</p>
   <p> Tech exp is {{ teck_exp }}</p>
+  <p> skill set is {{ skills }}</p>
   
   </template>
   
@@ -48,7 +57,25 @@
         password: '',
         role: 'Developer',
         terms: true,
-        teck_exp: []
+        teck_exp: [],
+        temp_skill: '',
+        skills: []
+      }
+    },
+    methods: {
+      addSkill($event) {
+        console.log($event)
+        if($event.key === ',' && this.temp_skill) {
+          if (! this.skills.includes(this.temp_skill)) {
+            this.skills.push(this.temp_skill)
+          }
+          this.temp_skill = ''
+        }
+      },
+      deleteSkill(skill) {
+        this.skills = this.skills.filter(item => {
+          return item !== skill
+        })
       }
     }
   }
@@ -97,4 +124,16 @@
       letter-spacing: 1px;
       font-weight: bold;
     }
+    .pill {
+    display: inline-block;
+    margin: 20px 10px 0 0;
+    padding: 6px 12px;
+    background: #eee;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color: #777;
+    cursor: pointer;
+  }
   </style>
