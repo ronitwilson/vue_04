@@ -5,6 +5,10 @@
       <label> Password :</label>
       <input type="password" required v-model="password">
 
+      <div v-if="passwordError" class="error">
+        {{ passwordError }}
+      </div>
+
       <label>Role:</label>
       <select v-model="role">
         <option value="Developer">Developer</option>
@@ -36,6 +40,10 @@
 
       <div v-for="skill in skills" :key="skill" class="pill">
       <p @click="deleteSkill(skill)">{{skill}}</p>
+      </div>
+
+      <div class="submit">
+        <button @click="handleSubmit">Create an Account</button>
       </div>
 
   </form>
@@ -76,7 +84,11 @@
         this.skills = this.skills.filter(item => {
           return item !== skill
         })
-      }
+      },
+      handleSubmit() {
+        console.log("submiting form ~~~~`")
+        this.passwordError = this.password.length < 5 ? '': "minimum 6 chars"
+    }
     }
   }
   
@@ -135,5 +147,11 @@
     font-weight: bold;
     color: #777;
     cursor: pointer;
+  }
+    .error {
+    color: #ff0062;
+    margin-top: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
   }
   </style>
